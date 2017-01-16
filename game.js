@@ -7,7 +7,7 @@ var bgcount = 0, kulacount = 0, guycount = 0, spacja = false, pos1 = 200, pos2 =
 var music, bamsample;
 var hitl = 0, hitr = 0;
 
-var speed = 0.8;
+var speed = 0.8, lost = false;
 
 var score = 100;
 
@@ -83,7 +83,7 @@ function update() {
     if (pos2 == 50) score-=2;
     
     if(score>100) score=100;
-    if (score <= 0) { alert("YOU LOST"); window.location.reload(); }
+    if ((score <= 0) && (!lost)) { alert("YOU LOST"); window.location.reload(); lost = true; }
 }
 
 function main() {
