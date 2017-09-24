@@ -3,6 +3,8 @@ var x = 10, y = 30;
 var bitmaps = ['bg1', 'bg2', 'bg3', 'guy1', 'guy2', 'guy3', 'badguy1', 'badguy2', 'bam', 'kula1', 'kula2', 'kula3', 'kula4'];
 var sprites = {};
 
+var touched = false;
+
 var bgcount = 0, kulacount = 0, guycount = 0, spacja = false, pos1 = 200, pos2 = 300, hit1 = false, hit2 = false;
 var music, bamsample;
 var hitl = 0, hitr = 0;
@@ -47,7 +49,8 @@ function update() {
     speed += 0.002;
     pos1 -= speed;
     pos2 -= speed;
-    if (pressed[KEY_SPACE]) {
+    if (pressed[KEY_SPACE] || touched) {
+	touched = false;
         spacja = true;
         if (pos1 < 100) {
             hit1 = true;
@@ -102,6 +105,16 @@ function main() {
         
 	ready(function(){
                         play_sample(music, 1.0, 1.0, true);
+
+
+               var canv = document.querySelector('#game_canvas');
+                canv.addEventListener('touchstart', function(e) {
+			touched = true;
+                });
+                canv.addEventListener('touchend', function(e) {
+			spacja = false;
+                });
+
 
 		loop(function(){
 			clear_to_color(canvas,makecol(255,255,255));
